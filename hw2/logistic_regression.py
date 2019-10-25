@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 # coding: utf-8
 
 # In[1]:
@@ -7,24 +7,24 @@
 import numpy as np
 import pandas as pd
 import sys
-X = pd.read_csv("X_train",low_memory=False)
+X = pd.read_csv(sys.argv[3],low_memory=False)
 
-X_test = pd.read_csv("X_test",low_memory=False)
+X_test = pd.read_csv(sys.argv[5],low_memory=False)
 X=np.array(X,dtype = float)
 X_test = np.array(X_test,dtype = float)
 
 
-#X_mean = np.mean(X,axis =0,keepdims = True)
-#X_std = np.std(X,axis = 0,keepdims = True)
+X_mean = np.mean(X,axis =0,keepdims = True)
+X_std = np.std(X,axis = 0,keepdims = True)
 
-#X = (X-X_mean)/X_std
-#X_test = (X_test-X_mean)/X_std
+X = (X-X_mean)/X_std
+X_test = (X_test-X_mean)/X_std
 
 
 
 #Y = pd.read_csv("Y_train",low_memory=False)
 #Y = np.array(Y,dtype = float)
-Y = np.loadtxt("Y_train",dtype=np.float,delimiter=',')
+Y = np.loadtxt(sys.argv[4],dtype=np.float,delimiter=',')
 
 Y = np.reshape(Y,(-1,1))
 
@@ -106,7 +106,7 @@ predict =np.array(predict,dtype=int)
 # In[5]:
 
 
-with open('logistic_regression.csv', 'w') as f:
+with open(sys.argv[6], 'w') as f:
        print('id,label', file=f)
        for (i, p) in enumerate(predict) :
            print('{},{}'.format(i+1, p[0]), file=f)

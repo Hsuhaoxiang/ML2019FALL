@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 # coding: utf-8
 
 # In[33]:
@@ -18,16 +18,6 @@ Y = np.reshape(Y,(-1,1))
 X=np.array(X,dtype = float)
 X_test = np.array(X_test,dtype = float)
 
-#normalize
-"""
-X_mean = np.mean(X,axis =0,keepdims = True)
-X_std = np.std(X,axis = 0,keepdims = True)
-X = (X-X_mean)/X_std
-X_test = (X_test-X_mean)/X_std
-print(X,X_test)
-"""
-#Y = pd.read_csv("Y_train",low_memory=False)
-#Y = np.array(Y,dtype = float)
 
 print("X_shape:",X.shape,"\nY_shape:",Y.shape)
 
@@ -101,7 +91,7 @@ result =np.array(result,dtype=int)
 # In[58]:
 
 
-with open('generative_model.csv', 'w') as f:
+with open(sys.argv[6], 'w') as f:
        print('id,label', file=f)
        for (i, p) in enumerate(result) :
            print('{},{}'.format(i+1, p), file=f)

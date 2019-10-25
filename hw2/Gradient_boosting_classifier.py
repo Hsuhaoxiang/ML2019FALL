@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 # coding: utf-8
 
 # In[1]:
@@ -15,9 +15,9 @@ from sklearn.externals import joblib
 # In[2]:
 
 
-X = pd.read_csv("X_train",low_memory=False)
-X_test = pd.read_csv("X_test",low_memory=False)
-Y = np.loadtxt("Y_train",dtype=np.int,delimiter=',')
+X = pd.read_csv(sys.argv[3],low_memory=False)
+X_test = pd.read_csv(sys.argv[5],low_memory=False)
+Y = np.loadtxt(sys.argv[4],dtype=np.int,delimiter=',')
 Y_logistic = np.reshape(Y,(-1,1))
 Y = Y.flatten()
 
@@ -50,32 +50,10 @@ result = model.predict(X_test)
 # In[5]:
 
 
-with open('./gbcresult/gbc7.csv', 'w') as f:
+with open(sys.argv[6], 'w') as f:
        print('id,label', file=f)
        for (i, p) in enumerate(result) :
            print('{},{}'.format(i+1, p), file=f)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
 
 
 
