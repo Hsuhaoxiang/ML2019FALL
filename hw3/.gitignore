@@ -1,0 +1,4 @@
+test_img/*
+train_img/*
+*.csv
+*.zip
