@@ -37,9 +37,10 @@ print("X_shape:",X.shape,"\nY_shape:",Y.shape)
 # In[3]:
 
 
-model = GradientBoostingClassifier(n_estimators = 5000,verbose  =1)
-model.fit(X,Y)
-
+#model = GradientBoostingClassifier(n_estimators = 600,verbose  =1)
+model = joblib.load('gbc.pkl')
+#model.fit(X,Y)
+#joblib.dump(model, './gbc.pkl')
 
 # In[4]:
 
