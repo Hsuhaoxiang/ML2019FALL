@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 # coding: utf-8
 
 
@@ -15,7 +15,6 @@ import numpy as np
 import pandas as pd
 import sys
 import cv2
-import sys
 
 
 use_cuda = torch.cuda.is_available()
@@ -92,18 +91,18 @@ class ImageNet(nn.Module):
 # In[5]:
 
 
-train_label = pd.read_csv(sys.agrv[2])
+train_label = pd.read_csv(sys.argv[2])
 train_label = np.array(train_label,dtype = int)
 datalen  = len(train_label)
-picture_file = sorted(os.listdir(sys.agrv[1]))
-train_dataset = FaceImage(train_label,picture_file,sys.agrv[1])
+picture_file = sorted(os.listdir(sys.argv[1]))
+train_dataset = FaceImage(train_label,picture_file,sys.argv[1])
 train_loader = torch.utils.data.DataLoader(train_dataset,batch_size = 256)
 
 
 # In[7]:
 
 
-model = ImageNet().cuda()
+model = ImageNet().to(device)
 #model = torch.load("Imagenet3.pkl")
 print(model)
 with open("loss_acc.csv","w") as f:
@@ -115,7 +114,7 @@ with open("loss_acc.csv","w") as f:
         train_loss = []
         train_acc = []
         for batch_index ,(data, label) in enumerate(train_loader):
-            data, label =data.cuda(), label.cuda()
+            data, label =data.to(device), label.to(device)
             optimizer.zero_grad()
             output = model(data)
             criterion = nn.CrossEntropyLoss()
