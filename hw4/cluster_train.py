@@ -33,6 +33,7 @@ class VAE(nn.Module):
     def __init__(self):
         super(VAE, self).__init__()
 
+
         # define: encoder
         self.conv1 = nn.Sequential(
             nn.Conv2d(3, 16, 3, 2),
@@ -127,7 +128,7 @@ else:
 
 
 # load data and normalize to [-1, 1]
-trainX = np.load('./trainX.npy')
+trainX = np.load(sys.argv[1])
 print(trainX.shape)
 trainX = np.transpose(trainX, (0, 3, 1, 2))/255.
 trainX = torch.Tensor(trainX)
@@ -168,7 +169,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
 
 
 # Now, we train 20 epochs.
-for epoch in range(1):
+for epoch in range(20):
     model.train()
     total_loss, best_loss = 0, 100
     """csie ta code
@@ -195,25 +196,11 @@ for epoch in range(1):
     print("\n  Training  | Loss:%.4f \n\n" % total_loss)
     
 
+
+
+torch.save(model, 'vae_11171012.pth')  
+
+'''
     # Collect the latents and stdardize it.
-latents = []
-latent_sapce = []
-for x in test_dataloader:
-    _,mu,var = model(x)
-    mu = mu.detach().cpu().numpy()
-    for i in range(mu.shape[0]):
-        latent_sapce.append(mu[i])
-        
-print('latent_space finish')
-latent_space = np.asarray(latent_sapce)
 
-print(latent_space.shape)
-latents = (latent_space - np.mean(latent_space, axis=0)) / np.std(latent_space, axis=0)
-
-# Use PCA to lower dim of latents and use K-means to clustering.
-pca = PCA(n_components=32, copy=False, whiten=True, svd_solver='full')
-latent_vec = pca.fit_transform(latents)
-
-latent_vec = TSNE(n_components = 3,verbose = 5).fit_transform(latent_vec)
-
-torch.save(latent_vec,"latent_vec_new2222.npy")
+'''
