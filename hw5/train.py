@@ -17,6 +17,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import DataLoader
 
+cuda = True if torch.cuda.is_available() else False
 TRAIN_X_PATH = sys.argv[1]
 TRAIN_Y_PATH = sys.argv[2]
 TEST_X_PATH = sys.argv[3]
@@ -70,7 +71,7 @@ with open('corpus.csv', 'w', newline='') as csvfile:
 
 
 torch.manual_seed(3344)
-TRAIN_Y_PATH = "./train_y.csv"  #'data/train_y.csv'
+TRAIN_Y_PATH = sys.argv[2]  #'data/train_y.csv'
 train_y = pd.read_csv(TRAIN_Y_PATH)['label'].values
 
 
@@ -247,6 +248,3 @@ with open("result.csv","w") as f:  # 'results/predict.csv'
         content = [i,ans[i]]
         w.writerow(content)
 
-all_end_time = time.time()
-
-print('time elapsed: {}'.format(time.strftime("%H:%M:%S", time.gmtime(all_end_time-all_start_time))))
